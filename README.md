@@ -6,7 +6,7 @@ solve it, then perform that sequence on the cube.
 
 ## Credits
 
-- Jarryd Tilbrook (@jradtilbrook)
+- Jarryd Tilbrook ([@jradtilbrook](https://github.com/jradtilbrook))
 
 ## License
 
