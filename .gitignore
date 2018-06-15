@@ -16,6 +16,7 @@ cabal.sandbox.config
 *.hp
 *.eventlog
 .stack-work/
+rubiks.cabal
 cabal.project.local
 cabal.project.local~
 .HTF/
