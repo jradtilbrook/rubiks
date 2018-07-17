@@ -1,0 +1,4 @@
+ghc:
+  - '8.2'
+
+script: stack test
