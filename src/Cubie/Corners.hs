@@ -1,6 +1,5 @@
 module Cubie.Corners where
 
-import Prelude hiding (length)
 import Cubie.Misc
 import Data.Maybe
 
