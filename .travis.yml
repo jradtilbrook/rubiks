@@ -1,7 +1,5 @@
+# this is so ruby and other unnecessary stuff wont be installed
 language: generic
-
-ghc:
-  - '8.2'
 
 # download and unpack the stack executable
 before_install:
@@ -9,4 +7,5 @@ before_install:
   - export PATH=$HOME/.local/bin:$PATH
   - travis_retry curl -L https://get.haskellstack.org/stable/linux-x86_64.tar.gz | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
 
-script: stack test
+# run the tests through stack
+script: stack --no-terminal --skip-ghc-check test
