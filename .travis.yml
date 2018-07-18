@@ -13,3 +13,10 @@ cache:
 
 # run the tests through stack
 script: stack --no-terminal --skip-ghc-check test
+
+notifications:
+  email: false
+  slack:
+    on_success: change
+    rooms:
+      secure: VY8+izkOiOdABM7sjdOmADOrxRDHhaC3y6BRZpuhxnKPf6Z8vt9K1OQj0semNdNDm7IJkFOb9W9DxsclPzCYzLuZ15PnWYKBTWuGTVAlf/4fVJrU5tfqscL46jMcuLG4CE9nLox9d3EeMzUjiLC8JX2SzxJKNkQ1FLKEVuzLbPLvDl7qaqg12phzRJc2nZtMFL+QjIxH+w+/z+EZxYEGRlUqc0LDUw81J9871U6+WFYL1z5NJr+M33Qb1W5QZoF5bAup1pdLgRS6xPs3BkJB6x9BYNOVqms/dGvdhFlgyax/fjFjJwPioUTW0brzALrkU7CXhByeN6rtlXRf0lj5w5VtzHQRMmEIl/ljiMwnXWNHYEuX4qUmQ8v3BrUWRHp66bnwvs24sJqUame8IE4Kye7NTkP+OuaQeqtLFTFs03/YX2ZeIUDJIQ0vMRnFvOMCnbUuaGUrOLpBjWqrM4oMiPbd0lrGWSAOQXl1bobbd3rxiBZiACghG8H1U4FkiUHpg1PYg3rSMoqNMpjnTEkGZemMF8mzJRhcrGdKN8WRhu+DrgFuwPogkSGSnkG4PxG0mSxYY6tVPtCvAa1dbcIcSvLwGRQIh9s5ROrOibGH1kBZYwb4ve140t5LGVYTpezTnMIpBXC4RzbW25pVYFf0XW/kAqIyA2sHkZw7i7vHyV8=
