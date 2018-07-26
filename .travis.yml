@@ -11,8 +11,10 @@ cache:
   directories:
     - $HOME/.stack
 
-# run the tests through stack
-script: stack --no-terminal --skip-ghc-check test
+# lint files and run tests
+script:
+  - stack exec hlint app src test
+  - stack --no-terminal --skip-ghc-check test
 
 notifications:
   email: false
