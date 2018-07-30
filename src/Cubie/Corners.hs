@@ -1,5 +1,19 @@
 module Cubie.Corners where
 
-data Orientation = Solved | Clockwise | Anticlockwise deriving (Show, Read, Eq, Bounded, Enum)
+import Prelude hiding (length)
+import Cubie.Misc
+import Data.Maybe
 
-data OrientationVector = OrientationVector Orientation Orientation Orientation Orientation Orientation Orientation Orientation Orientation deriving (Show, Read, Eq)
+numCorners = 8
+
+{- Will derive bounded and enum to give this the properties we want, but can treat as Int everywhere -}
+type Orientation = Int
+
+newtype OrientationVector = OrientationVector { fromCornerOrientation :: Vector Orientation }
+
+newtype PermutationVector = PermutationVector { fromCornerPermutation :: Vector Orientation }
+
+data Corner = Corner { perm :: PermutationVector, orien :: OrientationVector }
+
+makePermutation :: Vector Orientation -> Maybe PermutationVector
+makePermutation v  = if (length v) /= 8 then Nothing else Just $ PermutationVector v
