@@ -6,5 +6,5 @@ import qualified Internal.Enum as I
 import qualified Cubie.Corners as C
 
 someFunc :: IO ()
-someFunc = putStrLn $ show $ I.next C.Anticlockwise
+someFunc = putStrLn $ show $ I.next (2 :: C.Orientation)
 
