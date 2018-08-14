@@ -4,6 +4,7 @@ import Prelude hiding (length)
 import Cubie.Misc
 import Data.Maybe
 
+numCorners :: Int
 numCorners = 8
 
 {- Will derive bounded and enum to give this the properties we want, but can treat as Int everywhere -}
@@ -16,4 +17,7 @@ newtype PermutationVector = PermutationVector { fromCornerPermutation :: Vector 
 data Corner = Corner { perm :: PermutationVector, orien :: OrientationVector }
 
 makePermutation :: Vector Orientation -> Maybe PermutationVector
-makePermutation v  = if (length v) /= 8 then Nothing else Just $ PermutationVector v
+makePermutation v  = if (length v) /= numCorners then Nothing else Just $ PermutationVector v
+
+makeOrientation :: Vector Orientation -> Maybe PermutationVector
+makeOrientation = makePermutation
