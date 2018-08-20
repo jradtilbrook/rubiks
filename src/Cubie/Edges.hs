@@ -7,16 +7,14 @@ import Data.Maybe
 numEdges :: Int
 numEdges = 12
 
-type Orientation = Int
+newtype OrientationVector = OrientationVector { fromEdgeOrientation :: Vector Int }
 
-newtype OrientationVector = OrientationVector { fromEdgeOrientation :: Vector Orientation }
-
-newtype PermutationVector = PermutationVector { fromEdgePermutation :: Vector Orientation }
+newtype PermutationVector = PermutationVector { fromEdgePermutation :: Vector Int }
 
 data Edge = Edge { perm :: PermutationVector, orien :: OrientationVector }
 
-makePermutation :: Vector Orientation -> Maybe PermutationVector
+makePermutation :: Vector Int -> Maybe PermutationVector
 makePermutation v = if (length v) /= numEdges then Nothing else Just $ PermutationVector v
 
-makeOrientation :: Vector Orientation -> Maybe PermutationVector
+makeOrientation :: Vector Int -> Maybe PermutationVector
 makeOrientation = makePermutation
