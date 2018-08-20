@@ -7,17 +7,14 @@ import Data.Maybe
 numCorners :: Int
 numCorners = 8
 
-{- Will derive bounded and enum to give this the properties we want, but can treat as Int everywhere -}
-type Orientation = Int
+newtype OrientationVector = OrientationVector { fromCornerOrientation :: Vector Int }
 
-newtype OrientationVector = OrientationVector { fromCornerOrientation :: Vector Orientation }
-
-newtype PermutationVector = PermutationVector { fromCornerPermutation :: Vector Orientation }
+newtype PermutationVector = PermutationVector { fromCornerPermutation :: Vector Int }
 
 data Corner = Corner { perm :: PermutationVector, orien :: OrientationVector }
 
-makePermutation :: Vector Orientation -> Maybe PermutationVector
+makePermutation :: Vector Int -> Maybe PermutationVector
 makePermutation v  = if (length v) /= numCorners then Nothing else Just $ PermutationVector v
 
-makeOrientation :: Vector Orientation -> Maybe PermutationVector
+makeOrientation :: Vector Int -> Maybe PermutationVector
 makeOrientation = makePermutation
