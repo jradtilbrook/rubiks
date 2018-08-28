@@ -13,7 +13,7 @@ newtype PermutationVector = PermutationVector { fromCornerPermutation :: Vector 
 data Corner = Corner { perm :: PermutationVector, orien :: OrientationVector }
 
 makePermutation :: Vector Int -> Maybe PermutationVector
-makePermutation v  = if (length v) /= numCorners then Nothing else Just $ PermutationVector v
+makePermutation v  = if length v /= numCorners then Nothing else Just $ PermutationVector v
 
 makeOrientation :: Vector Int -> Maybe PermutationVector
 makeOrientation = makePermutation
