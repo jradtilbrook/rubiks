@@ -14,7 +14,7 @@ newtype PermutationVector = PermutationVector { fromEdgePermutation :: Vector In
 data Edge = Edge { perm :: PermutationVector, orien :: OrientationVector }
 
 makePermutation :: Vector Int -> Maybe PermutationVector
-makePermutation v = if (length v) /= numEdges then Nothing else Just $ PermutationVector v
+makePermutation v = if length v /= numEdges then Nothing else Just $ PermutationVector v
 
 makeOrientation :: Vector Int -> Maybe PermutationVector
 makeOrientation = makePermutation
