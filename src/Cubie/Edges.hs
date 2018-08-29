@@ -1,20 +1,20 @@
 module Cubie.Edges where
 
 import Prelude hiding (length)
-import Cubie.Misc
 import Data.Maybe
+import qualified Data.Vector.Unboxed as U
 
 numEdges :: Int
 numEdges = 12
 
-newtype OrientationVector = OrientationVector { fromEdgeOrientation :: Vector Int }
+newtype OrientationVector = OrientationVector (U.Vector Int)
 
-newtype PermutationVector = PermutationVector { fromEdgePermutation :: Vector Int }
+newtype PermutationVector = PermutationVector (U.Vector Int)
 
 data Edge = Edge { perm :: PermutationVector, orien :: OrientationVector }
 
-makePermutation :: Vector Int -> Maybe PermutationVector
-makePermutation v = if length v /= numEdges then Nothing else Just $ PermutationVector v
+makePermutation :: U.Vector Int -> Maybe PermutationVector
+makePermutation v = if U.length v /= numEdges then Nothing else Just $ PermutationVector v
 
-makeOrientation :: Vector Int -> Maybe PermutationVector
+makeOrientation :: U.Vector Int -> Maybe PermutationVector
 makeOrientation = makePermutation
