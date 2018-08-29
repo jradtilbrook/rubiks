@@ -23,8 +23,6 @@ dependencies:
   - matrix
   - vector
   - hlint
-  - matrix
-  - vector
 
 library:
   source-dirs: src
