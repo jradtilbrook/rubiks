@@ -30,7 +30,7 @@ back (edgeOrien, edgePerm) =
     where
         ov = M.permute edgeOrien move
         pv = M.permute edgePerm move
-        move = [0, 1, 3, 2, 11, 5, 6, 1,0, 8, 9, 4, 7]
+        move = [0, 1, 3, 2, 11, 5, 6, 10, 8, 9, 4, 7]
 
 {-
  - Apply a left face rotation to the given orientation vectors

@@ -10,7 +10,7 @@ import Data.Vector.Unboxed (accum, backpermute, fromList, Vector)
  - Accumulate a vector using the provided array and a generic addition lambda with specific bound.
  - This is used to modify elements of a vector based on the index and value pair.
  -}
-accumulate modulus v s = accum (\a b -> (a + b) `mod` modulus) v
+accumulate modulus v = accum (\a b -> (a + b) `mod` modulus) v
 
 {-
  - Permute the given vector with the given sequence
