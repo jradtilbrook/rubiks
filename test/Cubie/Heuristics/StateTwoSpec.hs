@@ -7,16 +7,16 @@ import Data.Vector.Unboxed as V
 spec :: Spec
 spec = describe "ternaryFold" $ do
     it "[-1] equals 0" $
-        V.ifoldl ternaryFold 0 (V.fromList [-1 :: Int]) `shouldBe` 0
+        ifoldl ternaryFold 0 (fromList [-1 :: Int]) `shouldBe` 0
     it "[0] equals 1" $
-        V.ifoldl ternaryFold 0 (V.fromList [0 :: Int]) `shouldBe` 1
+        ifoldl ternaryFold 0 (fromList [0 :: Int]) `shouldBe` 1
     it "[1] equals 2" $
-        V.ifoldl ternaryFold 0 (V.fromList [1 :: Int]) `shouldBe` 2
+        ifoldl ternaryFold 0 (fromList [1 :: Int]) `shouldBe` 2
     it "[0, 1] equals 7" $
-        V.ifoldl ternaryFold 0 (V.fromList [0, 1 :: Int]) `shouldBe` 7
+        ifoldl ternaryFold 0 (fromList [0, 1 :: Int]) `shouldBe` 7
     it "[1, -1, 0, 1] equals 65" $
-        V.ifoldl ternaryFold 0 (V.fromList [1, -1, 0, 1 :: Int]) `shouldBe` 65
+        ifoldl ternaryFold 0 (fromList [1, -1, 0, 1 :: Int]) `shouldBe` 65
     it "[1, 0, 1, 1, 0, -1] equals 158" $
-        V.ifoldl ternaryFold 0 (V.fromList [1, 0, 1, 1, 0, -1 :: Int]) `shouldBe` 158
+        ifoldl ternaryFold 0 (fromList [1, 0, 1, 1, 0, -1 :: Int]) `shouldBe` 158
     it "[1, 1, 1, 1, 1, 1, 1] equals 2186" $
-        V.ifoldl ternaryFold 0 (V.fromList [1, 1, 1, 1, 1, 1, 1 :: Int]) `shouldBe` 2186
+        ifoldl ternaryFold 0 (fromList [1, 1, 1, 1, 1, 1, 1 :: Int]) `shouldBe` 2186
