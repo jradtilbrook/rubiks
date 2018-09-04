@@ -10,7 +10,7 @@ module Cubie.Moves.Corners
 import qualified Cubie.Moves as M (accumulate, permute)
 
 -- set the bound on the accumulator
-accumulate = M.accumulate (3 :: Int)
+accumulate = M.accumulate 3
 
 {-
  - Apply a front face rotation to the given orientation vectors
