@@ -10,7 +10,7 @@ module Cubie.Moves.Edges
 import qualified Cubie.Moves as M (accumulate, permute)
 
 -- set the bound on the accumulator
-accumulate = M.accumulate (2 :: Int) -- TODO: how do i fix type declarations so this cast isnt needed?
+accumulate = M.accumulate 2
 
 {-
  - Apply a front face rotation to the given orientation vectors
