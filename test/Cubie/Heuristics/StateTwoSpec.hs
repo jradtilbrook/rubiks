@@ -2,7 +2,7 @@ module Cubie.Heuristics.StateTwoSpec (spec) where
 
 import Test.Hspec
 import Cubie.Heuristics.StateTwo
-import Data.Vector.Unboxed as V
+import Data.Vector.Unboxed (fromList, ifoldl)
 
 spec :: Spec
 spec = describe "ternaryFold" $ do
