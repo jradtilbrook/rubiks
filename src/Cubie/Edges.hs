@@ -1,6 +1,5 @@
 module Cubie.Edges where
 
-import Prelude hiding (length)
 import Data.Maybe
 import qualified Data.Vector.Unboxed as U
 
