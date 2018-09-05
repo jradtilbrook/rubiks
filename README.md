@@ -9,6 +9,7 @@ solve it, then perform that sequence on the cube.
 ## Credits
 
 - Jarryd Tilbrook ([@jradtilbrook](https://github.com/jradtilbrook))
+- Saxon Jensen ([@saxJ](https://github.com/SaxJ))
 
 ## License
 
