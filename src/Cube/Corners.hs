@@ -1,4 +1,4 @@
-module Cubie.Corners where
+module Cube.Corners where
 
 import Data.Maybe
 import qualified Data.Vector.Unboxed as V

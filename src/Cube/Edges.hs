@@ -1,4 +1,4 @@
-module Cubie.Edges where
+module Cube.Edges where
 
 import Data.Maybe
 import qualified Data.Vector.Unboxed as V

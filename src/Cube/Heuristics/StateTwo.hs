@@ -1,4 +1,4 @@
-module Cubie.Heuristics.StateTwo
+module Cube.Heuristics.StateTwo
 ( ternaryFold
 ) where
 

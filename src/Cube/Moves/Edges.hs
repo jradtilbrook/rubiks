@@ -1,4 +1,4 @@
-module Cubie.Moves.Edges
+module Cube.Moves.Edges
 ( front
 , back
 , left
@@ -7,7 +7,7 @@ module Cubie.Moves.Edges
 , down
 ) where
 
-import Cubie.Edges
+import Cube.Edges
 import qualified Data.Vector.Unboxed as V
 
 {-

@@ -1,4 +1,4 @@
-module Cubie.Moves where
+module Cube.Moves where
 
 {-
  - Similar to function composition for applying moves to a cube.

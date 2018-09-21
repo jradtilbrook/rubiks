@@ -1,7 +1,7 @@
-module Cubie.Cube where
+module Cube.Cube where
 
-import qualified Cubie.Corners as C
-import qualified Cubie.Edges as E
+import qualified Cube.Corners as C
+import qualified Cube.Edges as E
 import qualified Data.Vector.Unboxed as V
 
 data Cube = Cube { corners :: C.Corner, edges :: E.Edge } deriving (Show)

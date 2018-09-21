@@ -1,7 +1,7 @@
-module Cubie.Heuristics.StateTwoSpec (spec) where
+module Cube.Heuristics.StateTwoSpec (spec) where
 
 import Test.Hspec
-import Cubie.Heuristics.StateTwo
+import Cube.Heuristics.StateTwo
 import Data.Vector.Unboxed (fromList, ifoldl)
 
 spec :: Spec

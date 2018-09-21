@@ -1,4 +1,4 @@
-module Cubie.Moves.Corners
+module Cube.Moves.Corners
 ( front
 , back
 , left
@@ -7,7 +7,7 @@ module Cubie.Moves.Corners
 , down
 ) where
 
-import Cubie.Corners
+import Cube.Corners
 import qualified Data.Vector.Unboxed as V
 
 {-
