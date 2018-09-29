@@ -1,6 +1,7 @@
 module Heuristics.StateOne where
 
 import Cube
+import Moves ((-:))
 import Moves.Edges
 import qualified Data.HashMap.Strict as M
 import qualified Data.Vector.Unboxed as V
@@ -46,7 +47,7 @@ heuristicList = M.singleton 0 0
  - Generate a list of edge states by applying all moves to the provided state
  -}
 nextStates :: Edge -> [Edge]
-nextStates edge = map (\f -> f edge) moves
+nextStates edge = map (edge -:) moves
 -- if any of the states are all zeros, discard them since theres nothing to come from it
 {- nextStates edge = filter (\a -> V.sum (orien a) /= 0) $ map (\f -> f edge) moves -}
 
