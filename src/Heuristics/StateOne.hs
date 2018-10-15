@@ -1,6 +1,7 @@
 module Heuristics.StateOne where
 
 import Cube
+import Data.Char
 import Moves ((-:))
 import Moves.Edges
 import qualified Data.HashMap.Strict as M
@@ -32,52 +33,80 @@ moves = [
     ]
 
 {-
- - This is used as a reducer for the edge orientation vector.
- - It treats the vector as a binary number and converts it to decimal using little-endian.
+ - Used to unfold a hashmap key to a list of integers.
+ - It just converts the numberic character at each index to its integer equivalent
  -}
-binaryFold carry index value = carry + value * 2 ^ index
+unfoldToInt :: String -> Maybe (Int, String)
+unfoldToInt [] = Nothing
+unfoldToInt (x:xs) = Just (digitToInt x, xs)
+
+{-
+ - Used to fold a list of integers to a string.
+ - It just prepends the character value of the integer to the string.
+ - NOTE: Unfortunately this produces a string representation of the vector but in reverse order. This was specifically
+ - chosen because it is used extensively in the solve algorithm so reversing the vector is unnecessary overhead.
+ -}
+foldString :: String -> Int -> String
+foldString carry value = intToDigit value : carry
 
 {-
  - Static lookup list. This is to be generated from a script ... TODO
  -}
-heuristicList :: M.HashMap Int Int
-heuristicList = M.singleton 0 0
+heuristicList :: M.HashMap String Int
+heuristicList = M.singleton (replicate numEdges '0') 0
 
 {-
- - Generate a list of edge states by applying all moves to the provided state
+ - Generate a list of edge states by applying all moves to the provided state.
  -}
 nextStates :: Edge -> [Edge]
 nextStates edge = map (edge -:) moves
--- if any of the states are all zeros, discard them since theres nothing to come from it
-{- nextStates edge = filter (\a -> V.sum (orien a) /= 0) $ map (\f -> f edge) moves -}
 
 {-
- - Map the provided list of edge states to their corresponding heuristic index value
- - TODO: this differs from the paper because the vector is reversed
+ - Map the provided list of edge states to their corresponding heuristic index value.
  -}
-heuristicIndices :: [Edge] -> [Int]
-heuristicIndices = map $ V.ifoldl binaryFold 0 . V.init . orien
-{- heuristicIndices = map $ V.ifoldl binaryFold 0 . V.init . V.reverse . orien -} -- this matches the matlab version
+-- TODO: combine this and the above function more elegantly
+heuristicIndices :: [Edge] -> [String]
+heuristicIndices = map $ V.foldl foldString "" . orien
 
 {-
- - Set the list of keys to the value in the provided hashmap
+ - Set the list of keys to the value in the provided hashmap.
+ - This uses `seq` to ensure that duplicate keys already in the map are not overridden
  -}
-setHashKeys :: [Int] -> Int -> M.HashMap Int Int -> M.HashMap Int Int
+setHashKeys :: [String] -> Int -> M.HashMap String Int -> M.HashMap String Int
 setHashKeys [] _ hash = hash
+-- TODO: this recursive application could be a source of distance distribution discrepancy
 setHashKeys (x:xs) dist hash = M.insertWith seq x dist $ setHashKeys xs dist hash
 
 {-
- - Given a list of edge states and distance
+ - Get a list of the keys for given value.
  -}
-generateLookup :: [(Int, Edge)] -> M.HashMap Int Int -> M.HashMap Int Int
-generateLookup [] hash = hash
-generateLookup _ hash | M.size hash >= 400 = hash
-generateLookup (x:xs) hash = generateLookup visiting hash'
+keysForDist :: Int -> M.HashMap String Int -> [String]
+keysForDist dist = M.keys . M.filter (dist ==)
+
+{-
+ - Ensure the given edge vector is the correct length.
+ - This will pad vector with zeros up to 11 then calculate the final element.
+ -}
+makeOrientation v = V.replicate padLength 0 V.++ v V.++ V.singleton modulus
     where
-        -- get the list of next achievable states from the current one
-        newStates = nextStates $ snd x
-        -- get the corresponding heuristic indices for the next states and add them to hashmap
-        heuristics = heuristicIndices newStates
-        hash' = setHashKeys heuristics (fst x + 1) hash
-        -- add the new states and their distances to the list to travel to
-        visiting = xs ++ zip (repeat (fst x + 1)) newStates
+        currentLength = V.length v
+        padLength = numEdges - currentLength
+        modulus = V.sum v `mod` 2
+
+{-
+ - Generate the full lookup map given a seed distance and map.
+ - The seed map should is expected to have the initial solved value and distance already set to allow for generating
+ - the states from.
+ -}
+generateLookup :: Int -> M.HashMap String Int -> M.HashMap String Int
+generateLookup 8 hash = hash -- end state, the distance shouldnt exceed 7
+generateLookup dist hash = generateLookup (dist + 1) hash'
+    where
+        -- get a list of vectors corresponding to the previously generated states at dist
+        prevStates = map (V.unfoldr unfoldToInt) $ keysForDist dist hash
+        -- ensure the edge vector is the correct length and calculate the final element
+        states = map makeOrientation prevStates
+        -- list of indices for the new edge states above
+        indices = heuristicIndices $ concatMap (nextStates . (\s -> Edge s (V.fromList []))) states
+        -- set those distance values in the hash
+        hash' = setHashKeys indices (dist + 1) hash
