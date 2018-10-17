@@ -1,8 +1,8 @@
 module Cube.Heuristics.StateOneSpec (spec) where
 
-import Test.Hspec
-import Cube.Heuristics.StateOne
 import Data.Vector.Unboxed (fromList, ifoldl)
+import Heuristics.StateOne
+import Test.Hspec
 
 spec :: Spec
 spec = describe "binaryFold" $ do
