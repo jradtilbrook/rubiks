@@ -1,4 +1,4 @@
-module Cube.Moves.Corners
+module Moves.Corners
 ( front
 , back
 , left

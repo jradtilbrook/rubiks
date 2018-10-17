@@ -1,4 +1,4 @@
-module Cube.Moves.Edges
+module Moves.Edges
 ( front
 , back
 , left
