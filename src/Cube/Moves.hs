@@ -1,6 +1,6 @@
 module Cube.Moves where
 
-import Cube.Cube
+import Cube
 import qualified Cube.Moves.Corners as Corner
 import qualified Cube.Moves.Edges as Edge
 

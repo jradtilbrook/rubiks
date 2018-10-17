@@ -7,7 +7,7 @@ module Cube.Moves.Corners
 , down
 ) where
 
-import Cube.Corners
+import Cube
 import qualified Data.Vector.Unboxed as V
 
 {-
