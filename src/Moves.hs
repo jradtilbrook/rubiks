@@ -1,8 +1,8 @@
-module Cube.Moves where
+module Moves where
 
 import Cube
-import qualified Cube.Moves.Corners as Corner
-import qualified Cube.Moves.Edges as Edge
+import qualified Moves.Corners as Corner
+import qualified Moves.Edges as Edge
 
 {-
  - Similar to function composition for applying moves to a cube.

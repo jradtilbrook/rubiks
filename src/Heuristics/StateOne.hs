@@ -1,4 +1,4 @@
-module Cube.Heuristics.StateOne
+module Heuristics.StateOne
 ( binaryFold
 ) where
 
