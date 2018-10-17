@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import Cube
 
 main :: IO ()
-main = someFunc
+main = print solvedCube
