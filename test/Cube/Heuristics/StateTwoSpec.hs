@@ -1,8 +1,8 @@
 module Cube.Heuristics.StateTwoSpec (spec) where
 
-import Test.Hspec
-import Cube.Heuristics.StateTwo
 import Data.Vector.Unboxed (fromList, ifoldl)
+import Heuristics.StateTwo
+import Test.Hspec
 
 spec :: Spec
 spec = describe "ternaryFold" $ do
