@@ -26,6 +26,6 @@ numCorners = 8
 numEdges :: Int
 numEdges = 12
 
-solvedCorner = Corner (V.replicate numCorners 0) (V.fromList $ take numCorners [1..])
-solvedEdge = Edge (V.replicate numEdges 0) (V.fromList $ take numEdges [1..])
-solvedCube = Cube solvedCorner solvedEdge
+solvedCorners = Corner (V.replicate numCorners 0) (V.fromList $ take numCorners [1..])
+solvedEdges = Edge (V.replicate numEdges 0) (V.fromList $ take numEdges [1..])
+solvedCube = Cube solvedCorners solvedEdges
