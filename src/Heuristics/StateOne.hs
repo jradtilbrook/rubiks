@@ -74,8 +74,7 @@ heuristicIndices = map $ V.foldl foldString "" . orien
  -}
 setHashKeys :: [String] -> Int -> M.HashMap String Int -> M.HashMap String Int
 setHashKeys [] _ hash = hash
--- TODO: this recursive application could be a source of distance distribution discrepancy
-setHashKeys (x:xs) dist hash = M.insertWith seq x dist $ setHashKeys xs dist hash
+setHashKeys (x:xs) dist hash = setHashKeys xs dist $ M.insertWith seq x dist hash
 
 {-
  - Get a list of the keys for given value.
