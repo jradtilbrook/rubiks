@@ -16,61 +16,46 @@ import qualified Data.Vector.Unboxed as V
 accumulate = V.accum (\a b -> (a + b) `mod` 2)
 
 {-
+ - Apply the given permutation list to an edge state.
+ -}
+move m (Edge orien perm) = Edge ov pv
+    where
+        ov = V.backpermute orien move
+        pv = V.backpermute perm move
+        move = V.fromList m
+
+{-
  - Apply a front face rotation to the given orientation vectors
  -}
-front (Edge edgeOrien edgePerm) =
-    Edge ov pv
-    where
-        ov = V.backpermute edgeOrien move
-        pv = V.backpermute edgePerm move
-        move = V.fromList [0, 1, 2, 3, 4, 9, 8, 7, 5, 6, 10, 11]
+front = move [0, 1, 2, 3, 4, 9, 8, 7, 5, 6, 10, 11]
 
 {-
  - Apply a back face rotation to the given orientation vectors
  -}
-back (Edge edgeOrien edgePerm) =
-    Edge ov pv
-    where
-        ov = V.backpermute edgeOrien move
-        pv = V.backpermute edgePerm move
-        move = V.fromList [0, 1, 3, 2, 11, 5, 6, 10, 8, 9, 4, 7]
+back = move [0, 1, 3, 2, 11, 5, 6, 10, 8, 9, 4, 7]
 
 {-
  - Apply a left face rotation to the given orientation vectors
  -}
-left (Edge edgeOrien edgePerm) =
-    Edge ov pv
-    where
-        ov = V.backpermute edgeOrien move
-        pv = V.backpermute edgePerm move
-        move = V.fromList [4, 5, 3, 2, 1, 0, 6, 7, 8, 9, 10, 11]
+left = move [4, 5, 3, 2, 1, 0, 6, 7, 8, 9, 10, 11]
 
 {-
  - Apply a right face rotation to the given orientation vectors
  -}
-right (Edge edgeOrien edgePerm) =
-    Edge ov pv
-    where
-        ov = V.backpermute edgeOrien move
-        pv = V.backpermute edgePerm move
-        move = V.fromList [0, 1, 7, 6, 4, 5, 2, 3, 8, 9, 10, 11]
+right = move [0, 1, 7, 6, 4, 5, 2, 3, 8, 9, 10, 11]
 
 {-
  - Apply a up face rotation to the given orientation vectors
  -}
-up (Edge edgeOrien edgePerm) =
-    Edge ov pv
+up edge = Edge ov' pv
     where
-        ov = accumulate (V.backpermute edgeOrien move) $ zip [0, 3, 8, 11] [1, 1..]
-        pv = V.backpermute edgePerm move
-        move = V.fromList [8, 1, 2, 11, 4, 5, 6, 7, 3, 9, 10, 0]
+        (Edge ov pv) = move [8, 1, 2, 11, 4, 5, 6, 7, 3, 9, 10, 0] edge
+        ov' = accumulate ov $ zip [0, 3, 8, 11] [1, 1..]
 
 {-
  - Apply a down face rotation to the given orientation vectors
  -}
-down (Edge edgeOrien edgePerm) =
-    Edge ov pv
+down edge = Edge ov' pv
     where
-        ov = accumulate (V.backpermute edgeOrien move) $ zip [1, 2, 9, 10] [1, 1..]
-        pv = V.backpermute edgePerm move
-        move = V.fromList [0, 10, 9, 3, 4, 5, 6, 7, 8, 1, 2, 11]
+        (Edge ov pv) = move [0, 10, 9, 3, 4, 5, 6, 7, 8, 1, 2, 11] edge
+        ov' = accumulate ov $ zip [1, 2, 9, 10] [1, 1..]
