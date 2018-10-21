@@ -71,7 +71,10 @@ up edge = Edge ov' pv
     where
         (Edge ov pv) = move [8, 1, 2, 11, 4, 5, 6, 7, 3, 9, 10, 0] edge
         ov' = accumulate ov $ zip [0, 3, 8, 11] [1, 1..]
-up' = move [11, 1, 2, 8, 4, 5, 6, 7, 0, 9, 10, 3]
+up' edge = Edge ov' pv
+    where
+        (Edge ov pv) = move [11, 1, 2, 8, 4, 5, 6, 7, 0, 9, 10, 3] edge
+        ov' = accumulate ov $ zip [0, 3, 8, 11] [1, 1..]
 up2 = move [3, 1, 2, 0, 4, 5, 6, 7, 11, 9, 10, 8]
 
 {-
@@ -81,5 +84,8 @@ down edge = Edge ov' pv
     where
         (Edge ov pv) = move [0, 10, 9, 3, 4, 5, 6, 7, 8, 1, 2, 11] edge
         ov' = accumulate ov $ zip [1, 2, 9, 10] [1, 1..]
-down' = move [0, 9, 10, 3, 4, 5, 6, 7, 8, 2, 1, 11]
+down' edge = Edge ov' pv
+    where
+        (Edge ov pv) = move [0, 9, 10, 3, 4, 5, 6, 7, 8, 2, 1, 11] edge
+        ov' = accumulate ov $ zip [1, 2, 9, 10] [1, 1..]
 down2 = move [0, 2, 1, 3, 4, 5, 6, 7, 8, 10, 9, 11]
