@@ -50,12 +50,6 @@ foldString :: String -> Int -> String
 foldString carry value = intToDigit value : carry
 
 {-
- - Static lookup list. This is to be generated from a script ... TODO
- -}
-heuristicList :: M.HashMap String Int
-heuristicList = M.singleton (replicate numEdges '0') 0
-
-{-
  - Generate a list of edge states by applying all moves to the provided state.
  -}
 nextStates :: Edge -> [Edge]
@@ -64,7 +58,6 @@ nextStates edge = map (edge -:) moves
 {-
  - Map the provided list of edge states to their corresponding heuristic index value.
  -}
--- TODO: combine this and the above function more elegantly
 heuristicIndices :: [Edge] -> [String]
 heuristicIndices = map $ V.foldl foldString "" . orien
 
@@ -93,19 +86,31 @@ makeOrientation v = V.replicate padLength 0 V.++ v V.++ V.singleton modulus
         modulus = V.sum v `mod` 2
 
 {-
- - Generate the full lookup map given a seed distance and map.
- - The seed map should is expected to have the initial solved value and distance already set to allow for generating
- - the states from.
+ - This is a helper function to display the distance distribution of the heuristic map - mainly for debugging.
  -}
-generateLookup :: Int -> M.HashMap String Int -> M.HashMap String Int
-generateLookup 8 hash = hash -- end state, the distance shouldnt exceed 7
-generateLookup dist hash = generateLookup (dist + 1) hash'
+distribution :: M.HashMap String Int -> [(Int, Int)]
+distribution hash = some [] 0
     where
-        -- get a list of vectors corresponding to the previously generated states at dist
-        prevStates = map (V.unfoldr unfoldToInt) $ keysForDist dist hash
-        -- ensure the edge vector is the correct length and calculate the final element
-        states = map makeOrientation prevStates
-        -- list of indices for the new edge states above
-        indices = heuristicIndices $ concatMap (nextStates . (\s -> Edge s (V.fromList []))) states
-        -- set those distance values in the hash
-        hash' = setHashKeys indices (dist + 1) hash
+        -- helper for calculating the number of occurences of the given key
+        count key = M.size $ M.filter (key ==) hash
+        some xs dist = let a = count dist in if a > 0 then xs ++ [(dist, a)] ++ some xs (dist + 1) else xs
+
+{-
+ - The heuristic list for all possible edge orientation states.
+ - This is calculated by visiting each possible state and indexing the number of moves required to reach it.
+ - It is calculated when it is first evaluated but it is quite inexpensive and will be in memory afterwards anyway.
+ -}
+heuristicList = generateLookup $ M.singleton (replicate numEdges '0') 0
+    where
+        generateLookup hash = if M.size hash >= 2048 then hash else generateLookup hash'
+            where
+                -- the current largest distance in the map
+                dist = maximum $ M.elems hash
+                -- get a list of vectors corresponding to the previously generated states at dist
+                prevStates = map (V.unfoldr unfoldToInt) $ keysForDist dist hash
+                -- ensure the edge vector is the correct length and calculate the final element
+                states = map makeOrientation prevStates
+                -- list of indices for the new edge states above
+                indices = heuristicIndices $ concatMap (nextStates . (\s -> Edge s (V.fromList []))) states
+                -- set those distance values in the hash
+                hash' = setHashKeys indices (dist + 1) hash
