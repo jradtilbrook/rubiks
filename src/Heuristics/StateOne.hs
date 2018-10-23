@@ -18,18 +18,18 @@ moves = [
     , right
     , up
     , down
-    , front . front
-    , back . back
-    , left . left
-    , right . right
-    , up . up
-    , down . down
-    , front . front . front
-    , back . back . back
-    , left . left . left
-    , right . right . right
-    , up . up . up
-    , down . down . down
+    , front2
+    , back2
+    , left2
+    , right2
+    , up2
+    , down2
+    , front'
+    , back'
+    , left'
+    , right'
+    , up'
+    , down'
     ]
 
 {-
