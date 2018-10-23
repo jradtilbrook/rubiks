@@ -1,4 +1,24 @@
-module Moves where
+module Moves
+( (-:)
+, front
+, back
+, back'
+, back2
+, down
+, front'
+, front2
+, left
+, left'
+, left2
+, right
+, right'
+, right2
+, up
+, up'
+, up2
+, down'
+, down2
+) where
 
 import Cube
 import qualified Moves.Corners as Corner
@@ -11,32 +31,31 @@ import qualified Moves.Edges as Edge
  -}
 x -: f = f x
 
-front (Cube corner edge) = Cube corner' edge'
-    where
-        corner' = Corner.front corner
-        edge' = Edge.front edge
+front = move Corner.front Edge.front
+front' = move Corner.front' Edge.front'
+front2 = move Corner.front2 Edge.front2
 
-back (Cube corner edge) = Cube corner' edge'
-    where
-        corner' = Corner.back corner
-        edge' = Edge.back edge
+back = move Corner.back Edge.back
+back' = move Corner.back' Edge.back'
+back2 = move Corner.back2 Edge.back2
 
-left (Cube corner edge) = Cube corner' edge'
-    where
-        corner' = Corner.left corner
-        edge' = Edge.left edge
+left = move Corner.left Edge.left
+left' = move Corner.left' Edge.left'
+left2 = move Corner.left2 Edge.left2
 
-right (Cube corner edge) = Cube corner' edge'
-    where
-        corner' = Corner.right corner
-        edge' = Edge.right edge
+right = move Corner.right Edge.right
+right' = move Corner.right' Edge.right'
+right2 = move Corner.right2 Edge.right2
 
-up (Cube corner edge) = Cube corner' edge'
-    where
-        corner' = Corner.up corner
-        edge' = Edge.up edge
+up = move Corner.up Edge.up
+up' = move Corner.up' Edge.up'
+up2 = move Corner.up2 Edge.up2
 
-down (Cube corner edge) = Cube corner' edge'
+down = move Corner.down Edge.down
+down' = move Corner.down' Edge.down'
+down2 = move Corner.down2 Edge.down2
+
+move mc me (Cube corner edge) = Cube corner' edge'
     where
-        corner' = Corner.down corner
-        edge' = Edge.down edge
+        corner' = mc corner
+        edge' = me edge
