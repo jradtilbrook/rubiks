@@ -5,7 +5,7 @@ import Cube
 import Test.Hspec
 
 spec :: Spec
-spec = describe "binaryFold" $ do
+spec = describe "cube move sequences" $ do
     it "2 front moves should be front2" $
         solvedCube -: front -: front `shouldBe` solvedCube -: front2
     it "3 front moves should be front'" $
