@@ -53,8 +53,8 @@ back2 = move [0, 1, 2, 3, 7, 5, 6, 4, 8, 9, 11, 10]
 {-
  - Apply a left face rotation to the given orientation vectors
  -}
-left = move [4, 5, 3, 2, 1, 0, 6, 7, 8, 9, 10, 11]
-left' = move [5, 4, 3, 2, 0, 1, 6, 7, 8, 9, 10, 11]
+left = move [4, 5, 2, 3, 1, 0, 6, 7, 8, 9, 10, 11]
+left' = move [5, 4, 2, 3, 0, 1, 6, 7, 8, 9, 10, 11]
 left2 = move [1, 0, 2, 3, 5, 4, 6, 7, 8, 9, 10, 11]
 
 {-

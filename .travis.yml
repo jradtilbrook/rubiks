@@ -15,7 +15,7 @@ cache:
 script:
   - stack build
   - stack exec hlint app src test
-  # - stack --no-terminal --skip-ghc-check test
+  - stack --no-terminal --skip-ghc-check test
 
 notifications:
   email: false
