@@ -2,6 +2,7 @@ module Heuristics.StateOne where
 
 import Cube
 import Data.Char
+import Data.Hashable
 import Moves ((-:))
 import Moves.Edges
 import qualified Data.HashMap.Strict as M
@@ -63,53 +64,41 @@ heuristicIndices = map $ V.foldl foldString "" . orien
 
 {-
  - Set the list of keys to the value in the provided hashmap.
- - This uses `seq` to ensure that duplicate keys already in the map are not overridden
+ - This uses `const` to ensure that duplicate keys already in the map are not overwritten.
  -}
-setHashKeys :: [String] -> Int -> M.HashMap String Int -> M.HashMap String Int
+setHashKeys :: (Eq a, Hashable a) => [a] -> Int -> M.HashMap a Int -> M.HashMap a Int
 setHashKeys [] _ hash = hash
-setHashKeys (x:xs) dist hash = setHashKeys xs dist $ M.insertWith seq x dist hash
+setHashKeys (x:xs) dist hash = setHashKeys xs dist $ M.insertWith (flip const) x dist hash
 
 {-
  - Get a list of the keys for given value.
  -}
-keysForDist :: Int -> M.HashMap String Int -> [String]
+keysForDist :: Int -> M.HashMap a Int -> [a]
 keysForDist dist = M.keys . M.filter (dist ==)
-
-{-
- - Ensure the given edge vector is the correct length.
- - This will pad vector with zeros up to 11 then calculate the final element.
- -}
-makeOrientation v = V.replicate padLength 0 V.++ v V.++ V.singleton modulus
-    where
-        currentLength = V.length v
-        padLength = numEdges - currentLength
-        modulus = V.sum v `mod` 2
 
 {-
  - This is a helper function to display the distance distribution of the heuristic map - mainly for debugging.
  -}
-distribution :: M.HashMap String Int -> [(Int, Int)]
-distribution hash = some [] 0
+distribution :: M.HashMap a Int -> [(Int, Int)]
+distribution hash = calculate 0
     where
-        -- helper for calculating the number of occurences of the given key
+        -- helper for calculating the number of occurrences of the given key
         count key = M.size $ M.filter (key ==) hash
-        some xs dist = let a = count dist in if a > 0 then xs ++ [(dist, a)] ++ some xs (dist + 1) else xs
+        calculate dist = let a = count dist in if a <= 0 then [] else (dist, a) : calculate (dist + 1)
 
 {-
  - The heuristic list for all possible edge orientation states.
  - This is calculated by visiting each possible state and indexing the number of moves required to reach it.
  - It is calculated when it is first evaluated but it is quite inexpensive and will be in memory afterwards anyway.
  -}
-heuristicList = generateLookup $ M.singleton (replicate numEdges '0') 0
+heuristic = generateLookup $ M.singleton (replicate numEdges '0') 0
     where
         generateLookup hash = if M.size hash >= 2048 then hash else generateLookup hash'
             where
                 -- the current largest distance in the map
                 dist = maximum $ M.elems hash
                 -- get a list of vectors corresponding to the previously generated states at dist
-                prevStates = map (V.unfoldr unfoldToInt) $ keysForDist dist hash
-                -- ensure the edge vector is the correct length and calculate the final element
-                states = map makeOrientation prevStates
+                states = map (V.unfoldr unfoldToInt) $ keysForDist dist hash
                 -- list of indices for the new edge states above
                 indices = heuristicIndices $ concatMap (nextStates . (\s -> Edge s (V.fromList []))) states
                 -- set those distance values in the hash
