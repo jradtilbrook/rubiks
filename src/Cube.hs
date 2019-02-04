@@ -7,16 +7,16 @@ data Edge = Edge (V.Vector Int) (V.Vector Int) deriving (Show)
 data Cube = Cube { corners :: Corner, edges :: Edge } deriving (Show)
 
 class Cubie c where
-    cubie :: Int -> c -> (Int, Int)
+    cubie :: Int -> c -> Maybe (Int, Int)
 class Orientation o where
     orien :: o -> V.Vector Int
 class Permutation p where
     perm :: p -> V.Vector Int
 
 instance Cubie Corner where
-    cubie i (Corner o p) = (o V.! i, p V.! i)
+    cubie i (Corner o p) = if i >= numCorners then Nothing else Just (o V.! i, p V.! i)
 instance Cubie Edge where
-    cubie i (Edge o p) = (o V.! i, p V.! i)
+    cubie i (Edge o p) = if i >= numEdges then Nothing else Just (o V.! i, p V.! i)
 
 instance Orientation Corner where
     orien (Corner o _) = o
