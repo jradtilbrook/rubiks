@@ -32,8 +32,9 @@ executables:
     main: Main.hs
     source-dirs: app
     ghc-options:
-      - -threaded
+      - -W
       - -rtsopts
+      - -threaded
       - -with-rtsopts=-N
     dependencies:
       - rubiks
