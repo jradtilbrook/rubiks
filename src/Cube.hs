@@ -2,9 +2,9 @@ module Cube where
 
 import qualified Data.Vector.Unboxed as V
 
-data Corner = Corner (V.Vector Int) (V.Vector Int) deriving (Show)
-data Edge = Edge (V.Vector Int) (V.Vector Int) deriving (Show)
-data Cube = Cube { corners :: Corner, edges :: Edge } deriving (Show)
+data Corner = Corner (V.Vector Int) (V.Vector Int) deriving (Eq, Show)
+data Edge = Edge (V.Vector Int) (V.Vector Int) deriving (Eq, Show)
+data Cube = Cube { corners :: Corner, edges :: Edge } deriving (Eq, Show)
 
 class Orientation o where
     orien :: o -> V.Vector Int
