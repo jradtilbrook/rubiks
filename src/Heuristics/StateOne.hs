@@ -58,8 +58,8 @@ nextStates edge = map (edge -:) moves
 {-
  - Map the provided list of edge states to their corresponding heuristic index value.
  -}
-heuristicIndices :: [Edge] -> [String]
-heuristicIndices = map $ V.foldl foldString "" . orien
+heuristicIndex :: Edge -> String
+heuristicIndex = V.foldl foldString "" . orien
 
 {-
  - Set the list of keys to the value in the provided hashmap.
@@ -111,6 +111,12 @@ heuristicList = generateLookup $ M.singleton (replicate numEdges '0') 0
                 -- ensure the edge vector is the correct length and calculate the final element
                 states = map makeOrientation prevStates
                 -- list of indices for the new edge states above
-                indices = heuristicIndices $ concatMap (nextStates . (\s -> Edge s (V.fromList []))) states
+                indices = map heuristicIndex $ concatMap (nextStates . (\s -> Edge s (V.fromList []))) states
                 -- set those distance values in the hash
                 hash' = setHashKeys indices (dist + 1) hash
+
+{-
+ - Get the distance heuristic for the given cube
+ -}
+distanceToSolved :: Cube -> Int
+distanceToSolved cube = M.lookupDefault 0 (heuristicIndex $ edges cube) heuristicList
