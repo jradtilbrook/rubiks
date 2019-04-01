@@ -118,5 +118,5 @@ heuristicList = generateLookup $ M.singleton (replicate numEdges '0') 0
 {-
  - Get the distance heuristic for the given cube
  -}
-distanceToSolved :: Cube -> Int
-distanceToSolved cube = M.lookupDefault 0 (heuristicIndex $ edges cube) heuristicList
+distanceToSolved :: Edges -> Int
+distanceToSolved cube = M.lookupDefault 0 (heuristicIndex cube) heuristicList
