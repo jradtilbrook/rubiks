@@ -7,7 +7,7 @@
 
 
 # Warnings currently triggered by your code
-- ignore: {name: "Reduce duplication"}
+- ignore: {name: "Reduce duplication", within: Cube.Heuristics.StateOneSpec}
 
 
 # Specify additional command line arguments
