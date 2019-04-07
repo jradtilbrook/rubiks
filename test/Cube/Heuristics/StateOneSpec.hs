@@ -17,35 +17,22 @@ filteredMoves j = [x | (x, i) <- zip moves [1::Int ..], i `elem` j]
  -}
 getMoveLimit = getStdRandom (randomR (0::Int, 7))
 
+{-
+ - Test the stage 1 heuristic by applying random moves and asserting the distance
+ -}
+randomTest = do
+    lim <- getMoveLimit
+    gen <- newStdGen -- global random number generator
+    let ms = filteredMoves $ take lim $ randomRs (0::Int, length moves) gen
+        in foldl (-:) solvedEdges ms -: distanceToSolved `shouldSatisfy` (<= lim)
+
 spec :: Spec
 spec = describe "validate heuristicList for stage 1" $ do
-    it "iteration 1" $ do
-        lim <- getMoveLimit
-        gen <- newStdGen -- global random number generator
-        let ms = filteredMoves $ take lim $ randomRs (0::Int, length moves) gen
-            -- apply the moves to a solved cube and assert the distance is <= the number of moves applied
-            in foldl (-:) solvedEdges ms -: distanceToSolved `shouldSatisfy` (<= lim)
-    it "iteration 2" $ do
-        lim <- getMoveLimit
-        gen <- newStdGen -- global random number generator
-        let ms = filteredMoves $ take lim $ randomRs (0::Int, length moves) gen
-            -- apply the moves to a solved cube and assert the distance is <= the number of moves applied
-            in foldl (-:) solvedEdges ms -: distanceToSolved `shouldSatisfy` (<= lim)
-    it "iteration 3" $ do
-        lim <- getMoveLimit
-        gen <- newStdGen -- global random number generator
-        let ms = filteredMoves $ take lim $ randomRs (0::Int, length moves) gen
-            -- apply the moves to a solved cube and assert the distance is <= the number of moves applied
-            in foldl (-:) solvedEdges ms -: distanceToSolved `shouldSatisfy` (<= lim)
-    it "iteration 4" $ do
-        lim <- getMoveLimit
-        gen <- newStdGen -- global random number generator
-        let ms = filteredMoves $ take lim $ randomRs (0::Int, length moves) gen
-            -- apply the moves to a solved cube and assert the distance is <= the number of moves applied
-            in foldl (-:) solvedEdges ms -: distanceToSolved `shouldSatisfy` (<= lim)
-    it "iteration 5" $ do
-        lim <- getMoveLimit
-        gen <- newStdGen -- global random number generator
-        let ms = filteredMoves $ take lim $ randomRs (0::Int, length moves) gen
-            -- apply the moves to a solved cube and assert the distance is <= the number of moves applied
-            in foldl (-:) solvedEdges ms -: distanceToSolved `shouldSatisfy` (<= lim)
+    it "iteration 1" randomTest
+    it "iteration 2" randomTest
+    it "iteration 3" randomTest
+    it "iteration 4" randomTest
+    it "iteration 5" randomTest
+    it "iteration 6" randomTest
+    it "iteration 7" randomTest
+    it "iteration 8" randomTest
