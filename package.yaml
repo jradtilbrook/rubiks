@@ -21,6 +21,7 @@ description: Please see the README on GitHub at <https://github.com/jradtilbrook
 dependencies:
   - base >= 4.7 && < 5
   - hlint
+  - random
   - unordered-containers
   - vector
 
@@ -32,8 +33,9 @@ executables:
     main: Main.hs
     source-dirs: app
     ghc-options:
-      - -threaded
+      - -W
       - -rtsopts
+      - -threaded
       - -with-rtsopts=-N
     dependencies:
       - rubiks
