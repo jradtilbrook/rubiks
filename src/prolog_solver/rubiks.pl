@@ -6,6 +6,7 @@
 %   G
 %   B
 % Cube format is cube(Tx9, Fx9, Lx9, Rx9, Gx9, Bx9)
+% Query example - moves(Solution,  cube(g,w,w,g,w,w,r,r,r,b,b,o,y,y,o,y,y,o,g,g,r,g,g,r,y,y,b,o,b,b,o,b,b,g,b,b,w,w,w,r,r,y,r,r,y,o,o,w,o,o,w,y,g,g), C), solved(C).
 
 % FACT 1 - A solved cube has all the faces in the right place
 solved(cube(T,T,T,T,T,T,T,T,T,F,F,F,F,F,F,F,F,F,L,L,L,L,L,L,L,L,L,R,R,R,R,R,R,R,R,R,G,G,G,G,G,G,G,G,G,B,B,B,B,B,B,B,B,B)).
